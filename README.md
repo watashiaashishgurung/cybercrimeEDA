@@ -320,3 +320,15 @@ Additional research and updated findings are available in the project repository
 > **Do reported cybercrime incidents display recurring monthly or seasonal patterns between 2016 and 2025, and do any of these patterns coincide with periods of major technology releases or increased technology-related consumer activity?**
 
 This project approaches that question through exploratory data analysis rather than assuming a causal relationship.
+
+## Data Source
+
+The cybercrime data used in this project was obtained from the
+**Belgian Federal Police – Police Crime Statistics (Statistiques Policières de Criminalité)**.
+
+Source: Belgian Federal Police – Directorate of Police Information and ICT Resources (DGR/DRI/BIPOL).
+
+Data period used in this analysis: **2016–2025**  
+Geographic area: **Leuven, Belgium**
+
+[Belgian Federal Police Crime Statistics](https://www.police.be/statistiques/en/crime)
