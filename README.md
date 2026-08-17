@@ -331,4 +331,4 @@ Source: Belgian Federal Police – Directorate of Police Information and ICT Res
 Data period used in this analysis: **2016–2025**  
 Geographic area: **Leuven, Belgium**
 
-[Belgian Federal Police Crime Statistics](https://www.police.be/statistiques/en/crime)
+[Belgian Federal Police Crime Statistics](https://www.politie.be/statistieken/nl/criminaliteit)
