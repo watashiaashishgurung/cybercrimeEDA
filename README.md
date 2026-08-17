@@ -308,12 +308,11 @@ For additional context on cybersecurity trends and threat activity, useful indus
 3. **Verizon Data Breach Investigations Report (DBIR)** — Annual analysis of security incidents and confirmed data breaches.
 4. **Cisco Cybersecurity Reports** — Research into changing attack patterns and cybersecurity risks.
 
-### Project Executive Summaries
+### Project Executive Summary
 
-Additional research and earlier findings are available in the project repository:
+Additional research and updated findings are available in the project repository:
 
-1. [**Executive Summaries CS V1**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V1%20.pdf) — Initial findings and research related to cybersecurity incidents and technology releases.
-2. [**Executive Summaries CS V2**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V2%20.pdf) — Additional analysis and updated research.
+1. [**Executive Summary CS 2016–2025**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive_Summary_CS_2016-2025_Styled.pdf) — Updated executive summary covering the exploratory analysis of reported cybercrime incidents in Leuven from 2016 to 2025.
 
 ---
 
