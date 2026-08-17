@@ -1,100 +1,324 @@
-# Predicting Cybersecurity Incidents: Data Analysis 🍊🍊🍃
+# Predicting Cybersecurity Incidents: Exploratory Data Analysis 🍊🍊🍃
 
-## Introduction 🍊🍊🍃
-This document provides an overview of the background research conducted to understand the correlation between high-tech product releases and cybersecurity incidents. The analysis aims to predict cybercrime incidents based on data trends.
+## Introduction
 
-## Background Research🍊🍊🍃
-Before conducting the actual data analysis to predict cybercrime incidents, it's important to conduct some background research on the topic.
+This project explores patterns in reported cybercrime incidents in **Leuven, Belgium, from 2016 to 2025**.
 
-Below, I've gathered information about major high-tech releases throughout the year:
+The analysis examines how cybercrime reports change over time, with particular attention to:
 
-* **January**: High-tech season kicks off with most high-tech companies sharing their latest innovations and future plans.
-* **June**: Companies start announcing new hardware releases, designs, and innovations.
-* **September to October**: The high-tech industry reaches its peak season with major product releases and technological advancements.
-* **November to December**: The focus shifts towards the holiday shopping season, with continued product releases and updates.
+* Yearly trends in reported cybercrime
+* Monthly and seasonal patterns
+* Differences between individual years
+* Accumulated monthly incidents across 2016–2025
+* Possible relationships between periods of increased technological activity and cybercrime reports
 
-## Timeline of High-Tech Product Releases
+A secondary research question considers whether periods associated with major technology releases and increased consumer activity coincide with changes in reported cybercrime.
 
-| Month          | Major Events and Releases                                       |
-|----------------|-----------------------------------------------------------------|
-| **January**    | **Consumer Electronics Show (CES)**                             |
-|                | - Major tech companies unveil latest innovations and products   |
-|                | - Focus on consumer electronics, IoT, and emerging technologies |
-|                |                                                                 |
-| **March-April**| **Spring Events**                                               |
-|                | - Apple sometimes holds special events (e.g., new iPads)        |
-|                | - Releases to create distance from holiday season               |
-|                |                                                                 |
-| **June**       | **Apple Worldwide Developers Conference (WWDC)**                |
-|                | - Major software updates for iOS, macOS, watchOS, and tvOS      |
-|                | - Occasional hardware announcements                             |
-|                |                                                                 |
-|                | **Microsoft and Other Tech Events**                             |
-|                | - Significant updates and product announcements                 |
-|                |                                                                 |
-| **September**  | **Apple's Major Product Launch**                                |
-| **October**    | - New iPhones, Apple Watches, and other significant products    |
-|                |                                                                 |
-|                | **Google's Pixel Event**                                        |
-|                | - Announcements of new Pixel phones and other Google hardware   |
-|                |                                                                 |
-|                | **Other Tech Announcements**                                    |
-|                | - Releases ahead of the holiday season                          |
-|                |                                                                 |
-| **November**   | **Microsoft and Other Tech Events**                             |
-|                | - Product releases aimed at the holiday shopping season         |
-|                | - Focus on consumer and enterprise products                     |
+> **Important:** This is an exploratory data analysis (EDA). Similar timing between technology releases and cybercrime activity may indicate an association worth investigating, but does not by itself establish causation.
 
-## Summary🍊🍊🍃
+---
 
-| Month            | Key Events                                                   |
-|------------------|--------------------------------------------------------------|
-| **January**      | CES                                                          |
-| **March-April**  | Spring events (e.g., Apple iPads)                            |
-| **June**         | WWDC (Apple software updates), other tech announcements      |
-| **September-October** | Major product launches (e.g., Apple iPhones, Google Pixel) |
-| **November**     | Pre-holiday releases (e.g., Microsoft)                       |
+## Dataset
 
-## Correlation Between New Releases and Increased Device Bugs, Software Inconsistencies, and Cyber Criminality 🤔🧑‍💻🍂
+The dataset contains monthly cybercrime reports for the **Leuven arrondissement** covering:
 
-### 1. New Device Bugs and Inconsistencies in Software Services
-- **Complexity of New Features**: New devices and software updates often come with complex new features that haven't been tested extensively in real-world scenarios. This can lead to unforeseen bugs and inconsistencies.
-- **Inadequate Testing Time**: Companies may face tight deadlines to release products, especially if they aim to align with major events or holiday seasons. This rush can result in less rigorous testing, leading to bugs.
-- **Hardware-Software Integration**: New hardware often requires new drivers and firmware. The interaction between new hardware and existing software can introduce compatibility issues and bugs.
-- **User Feedback Loop**: After a new release, companies rely on user feedback to identify and fix issues. The initial period after a release typically sees a spike in reported bugs as more users start using the new features.
+**2016–2025**
 
-### 2. Increased Cyber Criminality
-- **Exploitable Vulnerabilities**: New products and updates may introduce new vulnerabilities that cybercriminals can exploit. Until these vulnerabilities are identified and patched, they pose a security risk.
-- **Increased Attention**: High-profile releases attract the attention of cybercriminals looking to exploit the hype. For example, phishing campaigns often coincide with major product launches to trick users into divulging personal information.
-- **Lag in Security Updates**: Users may not immediately apply patches or updates, leaving their devices vulnerable. Cybercriminals take advantage of this window of opportunity.
-- **Targeting Early Adopters**: Early adopters of new technology may not be as vigilant about security practices, making them prime targets for cybercriminals.
+The data is transformed into a tidy structure containing:
 
-## Examples and Evidence
-- **iOS and Android Releases**: Major updates to operating systems like iOS and Android often come with initial bugs that need subsequent patches. The introduction of new features can also lead to security vulnerabilities that are quickly targeted by hackers.
-- **High-Profile Cyber Attacks**: Following significant product launches, there have been instances of increased cybercriminal activity. For instance, new versions of Windows have historically seen a spike in targeted malware attacks shortly after release.
-- **Security Reports**: Annual security reports from companies like Symantec and McAfee often highlight the correlation between new tech releases and a temporary increase in cyber threats and vulnerabilities.
+| Column  | Description                             |
+| ------- | --------------------------------------- |
+| `year`  | Year of the observation                 |
+| `month` | Month of the observation                |
+| `total` | Number of reported cybercrime incidents |
+
+With 12 months across 10 years, the cleaned dataset contains **120 monthly observations**.
+
+---
+
+## Data Preparation
+
+The original CSV is stored in a wide, semicolon-separated format.
+
+During preprocessing, the data is transformed into a structure suitable for analysis:
+
+```text
+year | month    | total
+2016 | january  | ...
+2016 | february | ...
+2016 | march    | ...
+...  | ...      | ...
+2025 | december | ...
+```
+
+The notebook then converts the relevant fields to appropriate data types and creates a date variable for chronological analysis.
+
+---
+
+## Exploratory Data Analysis
+
+The analysis investigates the dataset from several perspectives.
+
+### Cybercrime Reports by Year
+
+Monthly observations are grouped by year to calculate the total number of reported cybercrime incidents for each year.
+
+This makes it possible to examine whether reported cybercrime increased, decreased, or remained relatively stable between **2016 and 2025**.
+
+### Cybercrime Reports by Month
+
+The data is also grouped by calendar month.
+
+For example:
+
+```text
+January total =
+January 2016 +
+January 2017 +
+January 2018 +
+...
+January 2025
+```
+
+The resulting stacked bar chart shows both:
+
+* The **accumulated total for each month across 2016–2025**
+* The contribution of each individual year to that monthly total
+
+Each bar therefore represents ten years of observations for the corresponding month.
+
+### Monthly Patterns by Year
+
+Individual years are visualized separately to make it easier to identify unusual months, peaks, declines, and recurring patterns.
+
+The project also uses radial charts to visualize how reported incidents are distributed throughout each calendar year.
+
+A consistent **Plasma color scale** is used across several visualizations to make comparisons between years easier.
+
+---
+
+## Background Research 🍊🍊🍃
+
+Before analyzing whether technology-release periods might coincide with changes in cybercrime activity, it is useful to identify periods of the year associated with major technology announcements and consumer activity.
+
+### Timeline of Major Technology Events
+
+| Period                | Examples                                                            |
+| --------------------- | ------------------------------------------------------------------- |
+| **January**           | Consumer Electronics Show (CES) and major technology announcements  |
+| **March–April**       | Spring product announcements and updates                            |
+| **June**              | Apple WWDC and other major software/platform announcements          |
+| **September–October** | Major smartphone, operating-system and consumer-device launches     |
+| **November–December** | Holiday shopping period, promotions and increased consumer activity |
+
+These periods provide useful reference points when visually comparing monthly cybercrime patterns.
+
+---
+
+## Why Technology Releases Could Be Relevant
+
+### New Device Bugs and Software Vulnerabilities
+
+New devices and software releases can introduce:
+
+* New or previously undiscovered vulnerabilities
+* Compatibility problems
+* Firmware and driver issues
+* Software bugs
+* Configuration problems
+
+The period immediately following a release may therefore create new opportunities for vulnerability discovery and exploitation.
+
+### Increased Cybercriminal Attention
+
+Major technology events can also generate increased public attention.
+
+Cybercriminals may attempt to exploit this attention through techniques such as:
+
+* Phishing
+* Fake promotions
+* Fraudulent websites
+* Malicious downloads
+* Social engineering
+* Impersonation of technology companies or services
+
+Holiday shopping periods may similarly provide opportunities for fraud and phishing campaigns.
+
+---
+
+## Interpretation
+
+The monthly cybercrime data can be compared with the approximate timing of major technology releases and periods of increased consumer activity.
+
+However, a similar seasonal pattern should **not automatically be interpreted as evidence that technology releases cause cybercrime**.
+
+Other factors could influence the observed numbers, including:
+
+* Changes in reporting behavior
+* Increased use of digital services
+* Holiday shopping
+* Large phishing or fraud campaigns
+* Changes in law-enforcement classification
+* Economic conditions
+* Growth in the number of internet-connected devices
+* Broader long-term growth in cybercrime
+
+The current analysis should therefore be considered **exploratory and hypothesis-generating**.
+
+A stronger causal analysis would require additional variables and statistical testing.
+
+---
+
+## Visualizations
+
+The Jupyter notebook contains several visualizations, including:
+
+* Total cybercrime reports by year
+* Accumulated cybercrime reports by month
+* Monthly totals stacked by year
+* Comparison of the earliest and latest years
+* Monthly time-series visualization
+* Year-by-year bar charts
+* Radar charts
+* Radial bar charts
+
+Together, these visualizations provide different perspectives on the temporal structure of the dataset.
+
+---
+
+## Technologies Used
+
+* **Python**
+* **Jupyter Notebook**
+* **Pandas**
+* **Matplotlib**
+* **Seaborn**
+* **NumPy**
+
+---
+
+## How to View and Run the Jupyter Notebook
+
+The main data analysis is provided as a **Jupyter Notebook (`.ipynb`)**. You can either view the notebook directly on GitHub or download it and run the analysis yourself.
+
+### Option 1 — View on GitHub
+
+GitHub can display Jupyter Notebooks directly in your browser.
+
+1. Open this repository on GitHub.
+2. Click the `.ipynb` notebook file.
+3. GitHub will render the notebook, including its Markdown explanations, Python code, tables, and saved visualizations.
+
+You do not need Python or Jupyter installed if you only want to **view the notebook**.
+
+### Option 2 — Run the Notebook Locally
+
+To execute the analysis yourself, first make sure **Python 3** is installed.
+
+Install Jupyter and the required Python packages:
+
+```bash
+python -m pip install jupyter pandas seaborn matplotlib numpy
+```
+
+On Windows, if the `python` command is unavailable, you can use:
+
+```bash
+py -m pip install jupyter pandas seaborn matplotlib numpy
+```
+
+Clone or download this repository and open a terminal inside the project directory.
+
+Start Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+Your browser should open the Jupyter interface automatically.
+
+Open the project's `.ipynb` file and run the cells sequentially using:
+
+**Cell → Run All**
+
+or execute individual cells with:
+
+**Shift + Enter**
+
+### Dataset Location
+
+The CSV dataset should remain in the **same directory as the Jupyter Notebook** so that the notebook can locate it using a relative path.
+
+Example project structure:
+
+```text
+cybercrimeEDA/
+│
+├── README.md
+├── cybercrime_dataanalysis.ipynb
+├── transposed3.csv
+├── Executive summaries CS V1.pdf
+└── Executive summaries CS V2.pdf
+```
+
+Using a relative path makes the project portable and prevents the notebook from depending on a specific Windows user directory.
+
+For example:
+
+```python
+transposed = pd.read_csv("transposed3.csv", sep=";")
+```
+
+rather than:
+
+```text
+C:/Users/username/Documents/.../transposed3.csv
+```
+
+### Required Python Libraries
+
+The analysis uses:
+
+* `pandas` — data loading, cleaning and manipulation
+* `seaborn` — statistical data visualization
+* `matplotlib` — charts and plotting
+* `numpy` — numerical operations and radial-chart calculations
+
+Once the dependencies are installed and the dataset is in the correct location, the notebook can be executed from top to bottom to reproduce the analysis and visualizations.
+
 
 ## Conclusion
-While the release of new products and updates is crucial for technological advancement, it is accompanied by an increase in bugs, software inconsistencies, and cybercriminal activity. Companies often address these issues through patches and updates post-release, but there is always an initial period of vulnerability that users and organizations must navigate carefully.
+
+The analysis provides an exploratory overview of reported cybercrime in Leuven between **2016 and 2025**.
+
+By examining yearly totals, accumulated monthly totals, individual-year patterns, and radial visualizations, the project makes it possible to identify periods in which reported cybercrime activity appears higher or lower.
+
+The comparison with major technology-release periods provides an interesting hypothesis for further investigation, but the available data alone cannot demonstrate that product releases directly cause increases in cybercrime.
+
+Future work could expand the analysis by incorporating vulnerability disclosures, phishing statistics, technology adoption data, product-release dates, economic indicators, and other cybersecurity datasets.
+
+---
 
 ## Further Reading
 
-For a more detailed understanding of the correlation between high-tech product releases and cybersecurity incidents, consider reading the following executive summaries:
+For additional context on cybersecurity trends and threat activity, useful industry sources include:
 
-1. **Symantec Internet Security Threat Report**: Provides an annual overview of the state of cybersecurity, including trends and statistics related to new product releases and associated vulnerabilities.
-2. **McAfee Labs Threats Report**: Offers insights into the latest cyber threats and how they correlate with major tech events and product launches.
-3. **Verizon Data Breach Investigations Report**: Analyzes data breaches and security incidents, highlighting patterns and trends that emerge around the time of new tech releases.
-4. **Cisco Annual Cybersecurity Report**: Examines the evolving cybersecurity landscape, with a focus on how new technologies and product releases impact security.
+1. **Symantec Internet Security Threat Report** — Historical analysis of cybersecurity threats, vulnerabilities and attack trends.
+2. **McAfee Labs Threats Report** — Research into malware, vulnerabilities and emerging cyber threats.
+3. **Verizon Data Breach Investigations Report (DBIR)** — Annual analysis of security incidents and confirmed data breaches.
+4. **Cisco Cybersecurity Reports** — Research into changing attack patterns and cybersecurity risks.
 
-These reports can provide valuable context and data to support the findings and analysis presented in this document.
+### Project Executive Summaries
 
-# Predicting Cybersecurity Incidents: Data Analysis 🍊🍊🍃
+Additional research and earlier findings are available in the project repository:
 
-## Further Reading
+1. [**Executive Summaries CS V1**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V1%20.pdf) — Initial findings and research related to cybersecurity incidents and technology releases.
+2. [**Executive Summaries CS V2**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V2%20.pdf) — Additional analysis and updated research.
 
-For a more detailed understanding of the correlation between high-tech product releases and cybersecurity incidents, consider reading the following executive summaries attached to this project:
+---
 
-1. [**Executive Summaries CS V1**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V1%20.pdf): Provides an overview of the initial findings and trends related to cybersecurity incidents following major tech releases.
-2. [**Executive Summaries CS V2**](https://github.com/watashiaashishgurung/cybercrimeEDA/blob/main/Executive%20summaries%20CS%20V2%20.pdf): Offers updated insights and analysis, including recent data and case studies on the impact of new product launches on cybersecurity.
+## Research Question
 
-These summaries can provide valuable context and data to support the findings and analysis presented in this document.
+> **Do reported cybercrime incidents display recurring monthly or seasonal patterns between 2016 and 2025, and do any of these patterns coincide with periods of major technology releases or increased technology-related consumer activity?**
+
+This project approaches that question through exploratory data analysis rather than assuming a causal relationship.
